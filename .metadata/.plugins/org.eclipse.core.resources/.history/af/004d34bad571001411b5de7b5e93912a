@@ -1,0 +1,294 @@
+package cs.assignments.treesII;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class RedBlackTree<K extends Comparable<K>, V> extends AbstractBinaryTree<K, V> {
+
+	private RedBlackNode root;
+
+	enum Color { 
+		RED(true), BLACK(false);
+		
+		boolean red;
+		
+		Color(boolean red) {
+			this.red = red;
+		}
+		
+		boolean isRed() { return red; }
+	}
+	
+	protected class RedBlackNode extends BinaryNode<K, V> {
+
+		Color color;
+		RedBlackNode left;
+		RedBlackNode right;
+		RedBlackNode(K key, V value, Color color) {
+			super(key, value);
+			this.color = color;
+		}
+		@Override
+		BinaryNode<K, V> getLeft() { return left; }
+		
+		@Override
+		BinaryNode<K, V> getRight() { return right; }
+	}
+	
+	/**
+	 * Main menu interface for testing.
+	 * @param args Not used
+	 */
+	public static void main(String...args) {
+		
+		RedBlackTree<Integer, Integer> rbt = new RedBlackTree<>();
+		
+		/*
+		 * Display menu, get user input, and perform operations based on
+		 * the request.
+		 */
+		Scanner scanner = new Scanner(System.in);
+		while (true) {		
+			System.out.print("\n\n" +
+					"1) Insert a node.\n" +
+					"2) Remove a node.\n" +
+					"3) Display pre-order traversal.\n" +
+					"4) Display in-order traversal.\n" +
+					"5) Display post-order traversal.\n" +
+					"6) Exit.\n" +
+					"Please choose an option: "
+			);
+			switch (Integer.parseInt(scanner.nextLine())) {
+		
+			case 1:
+				System.out.print("Enter the key to insert: ");
+				int i = Integer.parseInt(scanner.nextLine());
+				rbt.insert(i, i);
+				break;
+			case 2:
+				//System.out.print("Enter the key to remove: ");
+				System.out.print("Sorry, remove hasn't been implemented yet.");
+				//rbt.remove(Integer.parseInt(scanner.nextLine()));
+				break;
+			case 3:
+				System.out.println("Pre-order traversal:");
+				for (RedBlackTree<Integer, Integer>.RedBlackNode n : rbt.traversePreOrderWithColor())
+					System.out.printf(n.getValue() + "(" + n.color + "), ");
+				System.out.println();
+				break;
+			case 4:
+				System.out.println("In-order traversal:");
+				for (RedBlackTree<Integer, Integer>.RedBlackNode n : rbt.traverseInOrderWithColor())
+					System.out.printf(n.getValue() + "(" + n.color + "), ");
+				System.out.println();
+				break;
+			case 5:
+				System.out.println("Post-order traversal:");
+				for (RedBlackTree<Integer, Integer>.RedBlackNode n : rbt.traversePostOrderWithColor())
+					System.out.printf(n.getValue() + "(" + n.color + "), ");
+				System.out.println();
+				break;
+			case 6:
+				scanner.close();
+				return;
+			default:
+				System.out.println("You've entered an invalid option; " +
+								   "please try again...\n\n");
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Public insert interface.
+	 * @param key Key to map value to.
+	 * @param value Value to be inserted.
+	 */
+	@Override
+	public void insert(K key, V value) {
+		root = insert(root, new RedBlackNode(key, value, Color.RED));
+		root.color = Color.BLACK;
+	}
+	
+	/**
+	 * Recursive insert helper.
+	 * @param root The current root.
+	 * @param current The new node to be inserted.
+	 * @return Nodes to rebuild the tree.
+	 */
+	private RedBlackNode insert(RedBlackNode root, RedBlackNode current) {
+		if (root == null) 
+			return current;
+		int comp = root.key.compareTo(current.key);
+		if (comp > 0)
+			root.left = insert(root.left, current);
+		else if (comp < 0)
+			root.right = insert(root.right, current);
+		else
+			root.value = current.value;
+		if (isRedNode(root.left) && isRedNode(root.left.left))
+				root = rotateRight(root);
+		if (isRedNode(root.left) && isRedNode(root.right))
+			split(root);
+		else if (isRedNode(root.right) && !isRedNode(root.left))
+			root = rotateLeft(root);
+		return root;
+	}
+
+	@Override
+	public V get(K key) { return find(root, key).value; }
+	
+	/* (non-Javadoc)
+	 * @see cs.assignments.trees.BinarySearchTree#remove(java.lang.Comparable)
+	 */
+	@Override
+	public void remove(K key) { 
+		root = remove(root, key);
+		if(root != null)
+			root.color = Color.BLACK;			
+	}
+	
+	public RedBlackNode remove(RedBlackNode root, K key) {
+		if(root == null)
+			return null;
+		int comp = root.getKey().compareTo(key);
+		if(comp > 0)
+			root.left = remove(root.left, key);
+		else if(comp < 0)
+			root.right = remove(root.right, key);
+		else {
+			if(root.isLeaf())
+				return null;		
+		}
+		return root;
+	}
+
+	/**
+	 * Rotation for a node with a RED right child.
+	 * @param root The current node.
+	 * @return The rotated root.
+	 */
+	private RedBlackNode rotateLeft(RedBlackNode root) {
+		RedBlackNode rbn = root.right;
+		root.right = rbn.left;
+		rbn.left = root;
+		rbn.color = root.color;
+		root.color = Color.RED;
+		return rbn;
+	}
+	
+	/**
+	 * Rotation for a node with a RED left child who has
+	 * a RED left child.
+	 * @param root The current node.
+	 * @return The rotated root.
+	 */
+	private RedBlackNode rotateRight(RedBlackNode root) {
+		RedBlackNode rbn = root.left;
+		root.left = rbn.right;
+		rbn.right = root;
+		rbn.color = root.color;
+		root.color = Color.RED;
+		return rbn;
+	}
+	
+	/**
+	 * Splits a node with a RED right and left child by
+	 * inverting the color of the three involved nodes.
+	 * @param root The current node to split.
+	 */
+	private void split(RedBlackNode root) {
+		root.color = Color.RED;
+		root.left.color  = Color.BLACK;
+		root.right.color = Color.BLACK;
+	}
+	
+	/**
+	 * Determines if the node is a RED node.
+	 * @param root The node in question.
+	 * @return The answer.
+	 */
+	private boolean isRedNode(RedBlackNode root) { 
+		return (root == null) ? false : (root.color == Color.RED); 
+	}
+	
+	public List<RedBlackNode> traversePreOrderWithColor() {
+		List<RedBlackNode> list = new ArrayList<>();
+		traversePreOrderWithColor(root, list);
+		return list;
+	}
+
+	/**
+	 * Recursively adds the elements of the tree into a list
+	 * in-order - Left-Root-Right.
+	 * @param root The root of the current subtree.
+	 * @param values The list of node values.
+	 */
+	protected void traversePreOrderWithColor(RedBlackNode root, List<RedBlackNode> values) {
+		if (root == null)
+			return;
+		values.add(root);
+		traversePreOrderWithColor((RedBlackNode)root.getLeft(), values);
+		traversePreOrderWithColor((RedBlackNode)root.getRight(), values);
+	}
+	
+	public List<RedBlackNode> traverseInOrderWithColor() {
+		List<RedBlackNode> list = new ArrayList<>();
+		traverseInOrderWithColor(root, list);
+		return list;
+	}
+	
+	/**
+	 * Recursively adds the elements of the tree into a list
+	 * in-order - Left-Root-Right.
+	 * @param root The root of the current subtree.
+	 * @param values The list of node values.
+	 */
+	protected void traverseInOrderWithColor(RedBlackNode root, List<RedBlackNode> values) {
+		if (root == null)
+			return;
+		traverseInOrderWithColor((RedBlackNode)root.getLeft(), values);
+		values.add(root);
+		traverseInOrderWithColor((RedBlackNode)root.getRight(), values);
+	}
+	
+	public List<RedBlackNode> traversePostOrderWithColor() {
+		List<RedBlackNode> list = new ArrayList<>();
+		traversePostOrderWithColor(root, list);
+		return list;
+	}
+	
+	protected void traversePostOrderWithColor(RedBlackNode root, List<RedBlackNode> values) {
+		if (root == null)
+			return;
+		traversePostOrderWithColor((RedBlackNode)root.getLeft(), values);
+		traversePostOrderWithColor((RedBlackNode)root.getRight(), values);
+		values.add(root);
+	}
+	
+	/**
+	 * @see BinarySearchTree.traverseInOrder
+	 */
+	@Override
+	public List<V> traverseInOrder() {
+		List<V> list = new ArrayList<>();
+		traverseInOrder(root, list);
+		return list;
+	}
+
+	/**
+	 * @see BinarySearchTree.traversePostOrder
+	 */
+	@Override
+	public List<V> traversePostOrder() {
+		List<V> list = new ArrayList<>();
+		traversePostOrder(root, list);
+		return list;
+	}
+
+	@Override
+	public List<V> traversePreOrder() {
+		return null;
+	}
+}

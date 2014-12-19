@@ -1,0 +1,11 @@
+package cs.assignments.trees;
+
+import java.util.List;
+
+import cs.assignments.treesII.BinarySearchTree.BinaryTreeNode;
+
+public class TreeUtility {
+	static <N extends BinaryTreeNode> void traversInOrder(N root, List values) {
+		
+	}
+}

@@ -1,0 +1,19 @@
+ackage cs;
+
+public class CreditAccount 
+extends AbstractAccount {
+	
+	private double limit;
+	
+	public CreditAccount(double balance, String accountId, double interest, double limit) {
+		super(balance, accountId, interest);
+		this.limit = limit;
+	}
+/*
+	public CreditAccount(double balance, String accountId, double interest) {
+		super(balance, accountId, interest);
+		
+	}
+	*/
+	public double getLimit() { return limit; }
+}

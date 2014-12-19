@@ -1,0 +1,12 @@
+package cs.assignments;
+
+import cs.assignments.trees.BinarySearchTree;
+
+public class BSTApp {
+	
+	public static void main(String...args) {
+		
+		BinarySearchTree<Integer, Integer> bst = new BinarySearchTree<>();
+		
+	}
+}

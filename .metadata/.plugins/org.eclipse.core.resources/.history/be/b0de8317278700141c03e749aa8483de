@@ -1,0 +1,272 @@
+package cs.graphs;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Scanner;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+/**
+ * <p><h1>
+ * GRADER INFO:</h1><p>
+ * The application initially opens maximized with a "Browse" button which 
+ * allows you to select a sample data file on the invoking system. Once a
+ * .txt file, matching the assignment's format, is chosen, a "Get MST" button 
+ * will be enabled to generate the MST for the given data and show the results 
+ * on a tab-ed view which gives both a typical tree and text representation of 
+ * the MST.</p><p><h3>
+ * Running Instructions:</h3>
+ * The application is compiled and ready to run from the command line with<b>
+ * java MSTApp</b>. With large data sets (i.e.; 10,000 verticies), it may take a 
+ * moment to both generate the visual tree and the text view. There is a check box
+ * to choose to not generate the tree if desired.
+ * </p><p><h3>
+ * Sample Data:</h3>
+ * For convenience I've provided copies of the tiny, medium, and 10000EWG text files
+ * from the book's website included in the zip folder.</p><p><h3>
+ * Output:</h3><p>
+ * The visual (tree) results are given in a common expanding tree seen for file structures. It
+ * will open fully expanded. You can scroll up, down, left, and right, as well as, 
+ * collapse any number of nodes to decrease the size of the tree. The text output is printed 
+ * with the smallest weighted edge first as is done in some examples in the book. At the 
+ * bottom of the app's window are two labels; one for the number of verticies and another
+ * for the total weight of the MST. They too will appear once the program has completed
+ * the graph, MST, and visual creations.</p><hr><p>
+ * This class is the driver for the MST assignment. It creates a GUI with
+ * the ability for the user to browse their file system to choose a sample
+ * data file to populate a WeightedGraph with.
+ * </p></p>
+ * 
+ * @author Robert Wilk
+ *
+ */
+public class MSTApp {
+	private static String fileName;
+	private static JFileChooser chooser;
+	private static JFrame frame;
+	private JPanel filePanel;
+	private JLabel fileLabel;
+	private static JTextField fileField;
+	private JButton browseButton;
+	private static JButton createButton;
+	private static JCheckBox makeTree;
+	private static JTabbedPane tabs;
+	private static JPanel specPanel;
+	private GridBagConstraints gbc;
+	
+	private static final String NFE_ERROR = 
+			"There was a problem with the file.\nIt may be a different "
+			+ "format than specified for the assignment.\nThe file should "
+			+ "be:\n\n"
+			+ "\t8\n"
+			+ "\t4 5 0.35\n"
+			+ "\t4 7 0.37\n"
+			+ "\t...\n\n";
+	
+	private static final String FNFE_ERROR = 
+			"\tThe file you selected could not be found. "
+			+ "Check to see it still exists.";
+	
+	public static void main(String...args) throws Exception {
+		// We want to run GUI stuff on a separate thread.
+		SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+				new MSTApp();
+			}
+		});
+	}
+
+	// Constructor to build the GUI and initiate the Graph/MST process.
+	public MSTApp() {
+		
+		// Get and setup the window frame.
+		frame = new JFrame();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		// Constraints for the file chooser panel.
+		gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gbc.insets = new Insets(5, 5, 5, 5);
+		
+		// Panel to hold the label, text field, and buttons needed for MST.
+		filePanel = new JPanel(new GridBagLayout());
+		// Label for the file.
+		fileLabel = new JLabel("Sample I//O File:");
+		addComponent(filePanel, fileLabel, gbc, 0, 0, 1, 1, GridBagConstraints.BOTH, 0.0, 0.0);
+
+		// Text field for the file URI.
+		fileField = new JTextField(20);
+		addComponent(filePanel, fileField, gbc, 1, 0, 2, 1, GridBagConstraints.BOTH, 1.0, 0.0);
+		
+		// Button to invoke the file chooser.
+		browseButton = new JButton("Browse");
+		browseButton.addActionListener(browseListener);
+		addComponent(filePanel, browseButton, gbc, 3, 0, 1, 1, GridBagConstraints.BOTH, 0.0, 0.0);
+
+		// Button that invokes the MST creation.
+		createButton = new JButton("Get MST");
+		createButton.setEnabled(false);
+		createButton.addActionListener(createListener);
+		addComponent(filePanel, createButton, gbc, 4, 0, 1, 1, GridBagConstraints.BOTH, 0.0, 0.0);
+		
+		// Checkbox to tell the program to generate the visual tree panel.
+		makeTree = new JCheckBox("Show Tree");
+		makeTree.setSelected(true);
+		addComponent(filePanel, makeTree, gbc, 5, 0, 1, 1, GridBagConstraints.BOTH, 0.0, 0.0);
+
+		// Add the file panel to the main frame layout.
+		frame.getContentPane().add(filePanel, BorderLayout.PAGE_START);
+		
+		chooser = new JFileChooser();
+		
+		// Pack the frame and make it visible.
+		frame.setLocationByPlatform(true);
+		frame.pack();
+		frame.setVisible(true);	
+	}
+	/**
+	 * Listeners for the 'browse' button on the GUI
+	 */
+	private static ActionListener browseListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			FileNameExtensionFilter filter = 
+					new FileNameExtensionFilter("Sample I//O Text Files", "txt");
+			chooser.setFileFilter(filter);
+			int result = chooser.showOpenDialog(frame);
+			if(result == JFileChooser.APPROVE_OPTION) {
+				File selectedFile = chooser.getSelectedFile();
+				fileName = selectedFile.getAbsolutePath();
+				fileField.setText(selectedFile.getAbsolutePath());
+			}
+			createButton.setEnabled(true);
+		}	
+	};
+	/**
+	 * Listener for the 'create' button on the GUI.
+	 * This listener reads from the sample file and adds the VertexPanel
+	 * and TextPanel created to the GUI.
+	 */
+	private static ActionListener createListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+				// Make the MST from the graph created from the file.
+				final MST mst = new MST(getGraphFromFile());
+				
+				initTabs();
+				// Add the tabs to the main frame. 
+				// Does the user want to see the visual tree directory.
+				WeightedGraph g = mst.toWeightedGraph();
+				if (makeTree.isSelected())
+					tabs.add("Tree View", new VertexPanel(g, frame.getSize()));
+				tabs.add("Text View", new TextPanel(mst.toString(), frame.getSize()));
+				frame.add(tabs, BorderLayout.CENTER);
+				
+				addResultLabels(mst.getShortest().length, mst.weight());
+				// Prevent the user from regenerating the tree already shown.
+				createButton.setEnabled(false);
+				frame.add(specPanel, BorderLayout.PAGE_END);
+				// Redraw the frame.
+				frame.validate();		
+		}
+	};
+	/**
+	 * This method adds a component to the GribBagLayout used by the GUI.
+	 * @param panel The panel to add the component to.
+	 * @param component The component to be added to the panel.
+	 * @param gbc The GridBagConstrains to be applied to the component.
+	 * @param x The x grid of the layout.
+	 * @param y The y grid of the layout.
+	 * @param width The width in grid spots of the component.
+	 * @param height The height in grid spots of the component.
+	 * @param fill The fill pattern for the grid space.
+	 * @param weightx The x weight of the component on the grid.
+	 * @param weighty The y weight of the component on the grid.
+	 */
+	private static void addComponent(JPanel panel, JComponent component, GridBagConstraints gbc, int x, int y, 
+			int width, int height, int fill, double weightx, double weighty) {
+		gbc.gridx = x;
+		gbc.gridy = y;
+		gbc.gridwidth = width;
+		gbc.gridheight = height;
+		gbc.fill = fill;
+		gbc.weightx = weightx;
+		gbc.weighty = weighty;
+		
+		panel.add(component, gbc);
+	}
+	
+	// This method reads the file into a graph.
+	private static WeightedGraph getGraphFromFile() {
+		
+		String error = null;
+		WeightedGraph g = null;
+		try (Scanner s = new Scanner(new FileInputStream(fileName))) {
+			g = new WeightedGraph(Integer.parseInt(s.nextLine()));
+			// Read the file while it has more to read.
+			while(s.hasNext()) {
+				String[] edge = s.nextLine().split(" ");
+				g.addEdge(new Edge(Integer.parseInt(edge[0]), 
+					     	       Integer.parseInt(edge[1]), 
+								   Double.parseDouble(edge[2])
+			    ));
+			}
+		} catch (NumberFormatException nfe) {
+			error = NFE_ERROR + nfe.getLocalizedMessage();
+		} catch (FileNotFoundException fnfe) {
+			error = FNFE_ERROR + fnfe.getLocalizedMessage();
+		} finally {
+			initTabs();
+			TextArea ta = new TextArea();
+			ta.setText(error);
+			tabs.add(ta, "ERROR");
+			frame.add(tabs, BorderLayout.CENTER);
+			createButton.setEnabled(false);
+			frame.validate();
+		}
+		return g;
+	}
+	
+	private static void initTabs() {
+		if (tabs == null)
+			tabs = new JTabbedPane();
+		else
+			tabs.removeAll();
+	}
+	
+	private static void addResultLabels(int verticies, double weight) {
+		if (specPanel == null)
+			specPanel = new JPanel();
+		else 
+			specPanel.removeAll();
+		NumberFormat formatter = new DecimalFormat("###0.00000");
+		specPanel.add(new JLabel("Verticies: " + verticies + ";\t"), BorderLayout.EAST);
+		specPanel.add(new JLabel("\tTotal MST Weight: " + formatter.format(weight)), BorderLayout.WEST);
+		formatter = null;
+	}
+}

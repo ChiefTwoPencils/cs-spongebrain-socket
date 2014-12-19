@@ -1,0 +1,288 @@
+
+package cs.assignments.treesII;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * <hr><p><h1>
+ * Grader Information: 							</h1></p><p><b>
+ * @author Robert Wilk			  				<br>
+ * CSc 130 - Section 4 			  				<br>
+ * Assignment 2 - BinarySearchTree 				<br>
+ * 10-31-2014				 	  				<br>
+ * 								  				<br>
+ * Source File: BinarySearchTree.java 			<br>
+ * 
+ * </b></p>
+ * <p><b><i>
+ * Running Instructions:		</i></b><br>
+ * After opening a command or terminal window, navigate to the top level directory
+ * where the BinarySearchTree.java file is located. All the files needed to run the
+ * the program are compiled and ready. You can execute the java class file using 
+ * "<b>java BinarySearchTree [args]</b>" on the command line. </p><p><br><br>
+ * The program provides an user interface which allows them to choose an operation
+ * in a binary search tree. For ease of use, the interface accepts the value entered
+ * by the user and copies it into the key as well.
+ * 
+ * @see AbstractTree
+ * @param <K> The key type for the data value.
+ * @param <V> The value type to be stored.
+ */
+public class BinarySearchTree<K extends Comparable<K>, V> extends AbstractBinaryTree<K, V> {
+	
+	protected BSTNode root;
+	
+	/**
+	 * Node class for the search tree.
+	 * @see Node
+	 */
+	protected class BSTNode extends BinaryNode<K, V> {
+
+		// Links for a binary tree.
+		BSTNode left;
+		BSTNode right;
+		
+		public BSTNode(K key, V value) { super(key, value); }
+
+		@Override
+		public BSTNode getLeft() { return left; }
+
+		@Override
+		public BSTNode getRight() { return right; }
+	}
+	
+	public static void main(String...args) {
+		
+		BinarySearchTree<Integer, Integer> bst = new BinarySearchTree<>();
+		
+		/*
+		 * Display menu, get user input, and perform operations based on
+		 * the request.
+		 */
+		Scanner scanner = new Scanner(System.in);
+		while (true) {		
+			System.out.print("\n\n" +
+					"1) Insert a node.\n" +
+					"2) Remove a node.\n" +
+					"3) Display pre-order traversal.\n" +
+					"4) Display in-order traversal.\n" +
+					"5) Display post-order traversal.\n" +
+					"6) Exit.\n" +
+					"Please choose an option: "
+			);
+			switch (Integer.parseInt(scanner.nextLine())) {
+		
+			case 1:
+				System.out.print("Enter the key to insert: ");
+				int i = Integer.parseInt(scanner.nextLine());
+				bst.insert(i, i);
+				break;
+			case 2:
+				System.out.print("Enter the key to remove: ");
+				bst.remove(Integer.parseInt(scanner.nextLine()));
+				break;
+			case 3:
+				System.out.println("Pre-order traversal:");
+				for (int v : bst.traversePreOrder())
+					System.out.print(v + " ");
+				System.out.println();
+				break;
+			case 4:
+				System.out.println("In-order traversal:");
+				for (int v : bst.traverseInOrder())
+					System.out.print(v + " ");
+				System.out.println();
+				break;
+			case 5:
+				System.out.println("Post-order traversal:");
+				for (int v : bst.traversePostOrder())
+					System.out.print(v + " ");
+				System.out.println();
+				break;
+			case 6:
+				scanner.close();
+				return;
+			default:
+				System.out.println("You've entered an invalid option; " +
+								   "please try again...\n\n");
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Inserts the given value mapped to the given key.
+	 * @param K Key of insert.
+	 * @param V Value of insert.
+	 */	
+	@Override
+	public void insert(K key, V value) { 
+		// Insert new node starting at the root.
+		root = insert(root, new BSTNode(key, value)); 
+	}
+	
+	/**
+	 * Recursive insert helper.
+	 * @param root The root of the sub-tree.
+	 * @param current The node we're currently inserting.
+	 * @return The left/right child of the caller's root.
+	 */
+	protected BSTNode insert(BSTNode root, BSTNode current) {
+		// Are we at a leaf? If so return the new node.
+		if (root == null) 
+			return current;
+		// Compare the keys.
+		int comp = root.key.compareTo(current.key);
+		// If root > current insert into root.left.
+		if (comp > 0)
+			root.left = insert(root.left, current);
+		// If root < current insert into root.right. 
+		else if (comp < 0)
+			root.right = insert(root.right, current);
+		// According to the textbook's convention, we swap values
+		// when a duplicate is inserted.
+		else 
+			root.value = current.value;
+		return root;
+	}
+
+	/**
+	 * Gets the value mapped to the given key.
+	 * @param K The search key.
+	 * @return Value mapped to the given key or null.
+	 */
+	@Override
+	public V get(K key) { return find(root, key).value; }
+
+	/**
+	 * Finds the largest key in the tree.
+	 * @param root The root of the current sub-tree
+	 * @return The node mapped to the largest key or null.
+	 */
+	protected BSTNode max(BSTNode root) {
+		while (root.right != null) 
+			root = root.right;
+		return root;
+	}
+	
+	/**
+	 * Finds the smallest key in the tree.
+	 * @param root The root of the current sub-tree.
+	 * @return The node mapped to the smallest key or null.
+	 */
+	protected BSTNode min(BSTNode root) {
+		while (root.left != null)
+			root = root.left;
+		return root;
+	}
+	
+	/**
+	 * Removes the node mapped to the smallest key of the 
+	 * current sub-tree. The links are rebuilt as the 
+	 * recursion unwinds.
+	 * @param root The root of the current sub-tree.
+	 * @return Once the minimum is found, null is returned.
+	 */
+	protected BSTNode removeMin(BSTNode root) {
+		if (root.left == null)		
+			return root.right;
+		root.left = removeMin(root.left);
+		return root;
+	}
+	
+	/**
+	 * Removes the node mapped to the largest key of the
+	 * current sub-tree. The links are rebuilt as the 
+	 * recursion unwinds.
+	 * @param root The root of the current sub-tree.
+	 * @return Once the maximum is found, null is returned.
+	 */
+	protected BSTNode removeMax(BSTNode root) {
+		if (root.right == null)
+			return root.left;
+		root.right = removeMax(root.right);
+		return root;
+	}
+	
+	/**
+	 * Recursively removes the node mapped to the given key.
+	 * @param root The root of the current node.
+	 * @param key The search key.
+	 * @return The left/right child of the caller's root. 
+	 */
+	protected BSTNode remove(BSTNode root, K key) {
+		if (root == null)
+			return null;
+		// Compare the keys and call remove on the appropriate
+		// child of the root. If the keys match proceed with
+		// removal.
+		int comp = root.key.compareTo(key);
+		if (comp > 0) 
+			root.left = remove(root.left, key);
+		else if (comp < 0)
+			root.right = remove(root.right, key);
+		// The keys match if we get there.
+		else {
+			
+			if (root.right != null) {
+				BSTNode t = min(root.right);
+				root.value = t.value;
+				root.key = t.key;
+				root.right = removeMin(root.right);
+			} else if (root.left != null) {
+				BSTNode t = max(root.left);
+				root.value = t.value;
+				root.key = t.key;
+				root.left = removeMax(root.left);
+			} else
+				return null;
+		}
+		return root;
+	}
+	
+	/**
+	 * Public interface to remove a node.
+	 * @see Tree
+	 * @param key The key for the entry to remove.
+	 */
+	@Override
+	public void remove(K key) { root = remove(root, key); }
+
+	/**
+	 * Public interface for pre-order tree traversal.
+	 * @see Tree
+	 * @return The list of values in pre-order.
+	 */
+	@Override
+	public List<V> traversePreOrder() {
+		List<V> values = new ArrayList<>();
+		traversePreOrder(root, values);
+		return values;
+	}
+	
+	/**
+	 * Public interface for in-order tree traversal.
+	 * @see Tree
+	 * @return The list of values in pre-order.
+	 */
+	@Override
+	public List<V> traverseInOrder() {
+		List<V> values = new ArrayList<>();
+		traverseInOrder(root, values);
+		return values;
+	}
+	
+	/**
+	 * Public interface for post-order tree traversal.
+	 * @see Tree
+	 * @return The list of values in post-order.
+	 */
+	@Override
+	public List<V> traversePostOrder() {
+		List<V> values = new ArrayList<>();
+		traversePostOrder(root, values);
+		return values;
+	}
+}

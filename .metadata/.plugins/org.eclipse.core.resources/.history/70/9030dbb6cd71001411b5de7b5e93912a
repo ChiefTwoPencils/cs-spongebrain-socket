@@ -1,0 +1,59 @@
+package cs.assignments.treesII;
+
+import java.util.List;
+
+public abstract class AbstractBinaryTree<K extends Comparable<K>, V> implements Tree<K, V> {
+	
+	/**
+	 * Finds the node through key comparison and returns it, if possible.
+	 * @param root The root of the current sub-tree.
+	 * @param key The search key.
+	 * @return The node with the key if found or null.
+	 */
+	protected BinaryNode<K, V> find(BinaryNode<K, V> root, K key) {
+		if (root == null)
+			return root;
+		int comp = root.key.compareTo(key);
+		if (comp > 0)
+			return find(root.getLeft(), key);
+		if (comp < 0)
+			return find(root.getRight(), key);
+		return root;
+	}
+	
+	protected void traversePreOrder(BinaryNode<K, V> root, List<V> values) {
+		if (root == null) 
+			return;
+		values.add(root.getValue());
+		traversePreOrder(root.getLeft(), values);
+		traversePreOrder(root.getRight(), values);
+	}
+
+	/**
+	 * Recursively adds the elements of the tree into a list
+	 * in-order - Left-Root-Right.
+	 * @param root The root of the current subtree.
+	 * @param values The list of node values.
+	 */
+	protected void traverseInOrder(BinaryNode<K, V> root, List<V> values) {
+		if (root == null)
+			return;
+		traverseInOrder(root.getLeft(), values);
+		values.add(root.getValue());
+		traverseInOrder(root.getRight(), values);
+	}
+	
+	/**
+	 * Recursively adds the elements of the tree in
+	 * post-order - Left-Right-Root.
+	 * @param root The root of the current subtree.
+	 * @param values The list of node values.
+	 */
+	protected void traversePostOrder(BinaryNode<K, V> root, List<V> values) {
+		if (root == null)
+			return;
+		traversePostOrder(root.getLeft(), values);
+		traversePostOrder(root.getRight(), values);
+		values.add(root.value);
+	}
+}

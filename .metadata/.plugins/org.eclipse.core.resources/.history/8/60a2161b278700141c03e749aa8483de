@@ -1,0 +1,22 @@
+package cs.graphs.copy;
+/**
+ * This is the base Node class for all lists.
+ * 
+ * @author Robert Wilk
+ *
+ * @param <E> The element to be stored in the node.
+ */
+public abstract class ListNode <E extends Comparable<E>>{
+	E element;
+	
+	public ListNode(E element) {
+		this.element = element;
+	}
+	/**
+	 * This method gets the next node in the list.
+	 * 
+	 * @return The next node.
+	 */
+	abstract ListNode<E> getNext();
+	E getElement() { return element; }
+}

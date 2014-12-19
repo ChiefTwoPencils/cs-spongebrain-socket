@@ -1,0 +1,24 @@
+package cs;
+
+
+public class Tester {
+	
+	Integer[][] ints = new Integer[10][10];
+	
+	
+	
+	public static void main(String[]args){
+		Tester t = new Tester();
+		
+		Integer mil[][] = new Integer[1000000][1000000];
+		
+		for (int i = 0; i < 10; ++i) {
+			for (int j = 0; j < 10; ++j) {
+				Integer I = new Integer(i + 1 * j);
+				t.ints[i][j] = I;
+			}
+		}
+		System.out.println("done");
+	}
+}
+

@@ -1,0 +1,106 @@
+package cs.graphs;
+
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.UIManager;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+/**
+ * This class is a panel to display the MST as a tree on the 
+ * programs GUI area.
+ * @author Robert Wilk
+ *
+ */
+public class VertexPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	private static JTree tree;
+	private static JScrollPane scroll;
+	private static boolean[] used;
+	/**
+	 * This constructor makes the tree from the passed graph, creates
+	 * a JTree from the MST and passses the panel back to the caller.
+	 * @param full The full graph read from the file.
+	 * @param min A graph containing the MST in graph form.
+	 */
+	public VertexPanel(WeightedGraph min, Dimension dimension) {
+		/**
+		 * HashMap to hold and keep track of the tree nodes already created
+		 */
+		HashMap<Integer, DefaultMutableTreeNode> map = new HashMap<>();
+		/**
+		 * A Queue to store a given vertex's linked vertexes.
+		 */
+		Queue<Integer> potentials = new Queue<>();
+		/**
+		 * A boolean array to keep track of the completed vertexes.
+		 */
+		used = new boolean[min.verticies()];
+		Arrays.fill(used, false);
+		/**
+		 * The top of the Jtree.
+		 */
+		DefaultMutableTreeNode top = new DefaultMutableTreeNode("MST");
+		for (int i = 0; i  < min.adjacencyList().size(); ++i) {
+			if (min.adjacencyList().get(i).size() > 0) {
+				top.add(new DefaultMutableTreeNode(i));
+				map.put(i, (DefaultMutableTreeNode) top.getFirstChild());
+				potentials.enqueue(i);
+				break;
+			}
+		}
+		
+		// While there are more verticies to process...
+		while(!potentials.empty()) {
+			int isUsed = potentials.dequeue();
+			ArrayList<Edge> edgeList = min.adjacencyList().get(isUsed);
+			for(Edge edge : edgeList) {
+					int one = edge.getOne();
+					int other = edge.getTheOther(one);
+					int which;
+					if(one == isUsed) {
+						if(used[other])
+							continue;
+						else
+							which = one;
+					} else {
+						if(used[one])
+							continue;
+						which = other;
+					}
+					DefaultMutableTreeNode node = new DefaultMutableTreeNode(edge.getTheOther(which));
+					map.get(which).add(node);
+					map.put(edge.getTheOther(which), node);
+					if(!potentials.has(edge.getTheOther(which)))
+						potentials.enqueue(edge.getTheOther(which));					
+			}
+			used[isUsed] = true;
+		}
+		
+		// Change the system's default icons for a JTree to a custom vertex image.
+		Icon vectorIcon = new ImageIcon("treeIcon.gif");
+	    UIManager.put("Tree.leafIcon", vectorIcon);
+	    UIManager.put("Tree.openIcon", vectorIcon);
+	    UIManager.put("Tree.closedIcon", vectorIcon);
+	    
+		tree = new JTree(top);
+		tree.setPreferredSize(null);
+		tree.setLargeModel(true);
+		scroll = new JScrollPane(tree);
+		// Make sure all the verticies are expanded.
+		for (int row = 0; row < tree.getRowCount(); row++) {
+		    tree.expandRow(row);
+		}
+		Dimension pref = new Dimension(dimension.width - 35, dimension.height - 140);
+		scroll.setPreferredSize(pref);
+		add(scroll);
+	}
+}

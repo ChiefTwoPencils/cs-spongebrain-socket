@@ -1,0 +1,19 @@
+package cs;
+
+import java.util.ArrayList;
+
+
+public class Tester {
+	
+	Integer[][] ints = new Integer[10][10];
+	
+	
+	
+	public static void main(String[]args){
+		Tester t = new Tester();
+		int i = 1;
+		assert i > 1;
+		System.out.println("done");
+	}
+}
+

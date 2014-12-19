@@ -1,0 +1,68 @@
+package cs.assignments.graphs;
+/**
+ * This is the base class for all Queues not prioritized which implements
+ * the queue interface.
+ * 
+ * @author Robert Wilk
+ * 
+ * @param <E> The element type to be stored.
+ */
+public abstract class AbstractQueue <E extends Comparable <E>> 
+implements Q <E> {
+	
+	/**
+	 * @see AbstractQueue.dequeue
+	 */
+	@Override
+	public E dequeue() { 
+		if(getHead() == null) 
+			return null;
+		E e = getHead().getElement();
+		if(getHead().equals(getTail())) {
+			setHead(null);
+			setTail(null);
+		} else {
+			setHead(getHead().getNext());
+		}
+		return e;
+	}
+	/**
+	 * @see AbstractQueue.dequeue
+	 */
+	@Override
+	public E peek() { 
+		if(empty()) 
+			return null;
+		return getHead().getElement();
+	}
+	/**
+	 * @see AbstractQueue.dequeue
+	 */
+	@Override
+	public boolean has(E element) {
+		ListNode<E> node = getHead();
+		while(node != null) {
+			if(node.getElement().compareTo(element) == 0)
+				return true;
+			node = node.getNext();
+		}
+		return false;
+	}
+	/**
+	 * @see AbstractQueue.dequeue
+	 */
+	@Override
+	public boolean empty() { return getHead() == null; }
+	/**
+	 * This method sets the head node of the queue.
+	 * 
+	 * @param node The node to be set as the head.
+	 */
+	protected abstract void setHead(ListNode <E> node);
+	/**
+	 * This method sets the tail head of the queue.
+	 * 
+	 * @param node The node to set as the tail.
+	 */
+	protected abstract void setTail(ListNode <E> node);
+}

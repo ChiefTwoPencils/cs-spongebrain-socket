@@ -1,0 +1,19 @@
+package cs.assignments.treesII;
+
+public abstract class BinaryNode<K extends Comparable<K>, V> implements Node<K, V> {
+	
+	K key;
+	V value;
+	
+	abstract BinaryNode<K, V> getLeft();
+	abstract BinaryNode<K, V> getRight();
+	
+	public BinaryNode(K key, V value) {
+		this.key = key;
+		this.value =  value;
+	}
+	
+	public K getKey()   { return key; }
+	public V getValue() { return value; }
+	
+}
