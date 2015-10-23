@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="4731.0" y="3450.0">utilities.Observable</node>
+    <node x="11108.0" y="4254.5">model.IColorable</node>
+    <node x="6708.0" y="3590.5">controller.Game</node>
+    <node x="10729.0" y="4209.5">model.FuelCan</node>
+    <node x="6763.5" y="2009.0">commands.CollideWithCarAction</node>
+    <node x="871.0" y="4998.5">model.OilSlick</node>
+    <node x="10115.0" y="4054.5">controller.LifeLostException</node>
+    <node x="238.5" y="1243.5">model.ISteerable.Direction</node>
+    <node x="9037.5" y="2489.0">commands.CollideWithPylonAction</node>
+    <node x="2792.0" y="4752.0">model.AbstractFixedGameObject</node>
+    <node x="5128.0" y="3294.5">utilities.IObserver</node>
+    <node x="4469.0" y="3689.5">views.ScoreView</node>
+    <node x="3580.0" y="4311.5">model.Bird</node>
+    <node x="3950.5" y="4067.0">model.AbstractMoveableGameObject</node>
+    <node x="9591.5" y="3689.0">commands.AdvanceGameTimeAction</node>
+    <node x="3000.5" y="4089.0">model.AbstractGameObject</node>
+    <node x="1799.0" y="2443.0">utilities.ICollection</node>
+    <node x="6322.0" y="2129.0">commands.CollideWithBirdAction</node>
+    <node x="6093.0" y="2409.0">commands.AddOilSlickAction</node>
+    <node x="2531.0" y="2409.0">utilities.GameObjectCollection</node>
+    <node x="8485.0" y="1929.5">model.GameWorld.Speed</node>
+    <node x="5647.0" y="2689.0">commands.AccelerateCarAction</node>
+    <node x="7911.0" y="1969.0">commands.CollideWithFuelCanAction</node>
+    <node x="2281.0" y="2180.5">utilities.GameObjectCollection.GameCollectionIterator</node>
+    <node x="8702.5" y="1958.5">utilities.RandNumGen</node>
+    <node x="3268.0" y="4341.0">model.IGameObject</node>
+    <node x="6163.5" y="3272.0">views.MapView</node>
+    <node x="0.0" y="1254.5">model.ISteerable</node>
+    <node x="7391.0" y="1969.0">commands.GenerateNewColorsAction</node>
+    <node x="571.0" y="813.5">model.GameWorld</node>
+    <node x="4299.0" y="4054.5">controller.GameOverException</node>
+    <node x="5138.0" y="3174.5">utilities.IObservable</node>
+    <node x="322.5" y="1849.5">model.GameWorld.Size</node>
+    <node x="1554.0" y="4529.5">model.Pylon</node>
+    <node x="5260.0" y="2969.0">commands.BrakeCarAction</node>
+    <node x="11395.0" y="-26.0">model.Car</node>
+    <node x="10408.0" y="4518.5">utilities.Location2D</node>
+    <node x="4021.5" y="3934.5">model.IMovable</node>
+    <node x="9639.5" y="4043.0">controller.AbstractGameException</node>
+    <node x="2035.5" y="2203.5">utilities.IIterable</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="views.MapView" target="commands.BrakeCarAction">
+      <point x="-76.5" y="-20.0" />
+      <point x="5400.0" y="3300.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="commands.AdvanceGameTimeAction" target="controller.AbstractGameException">
+      <point x="0.0" y="71.0" />
+      <point x="0.0" y="-37.0" />
+    </edge>
+    <edge source="model.Pylon" target="utilities.Location2D">
+      <point x="166.0" y="-0.0" />
+      <point x="-112.0" y="-0.0" />
+    </edge>
+    <edge source="model.GameWorld" target="utilities.Location2D">
+      <point x="469.0" y="40.0" />
+      <point x="10360.0" y="1320.0" />
+      <point x="10360.0" y="4560.0" />
+      <point x="-112.0" y="-40.0" />
+    </edge>
+    <edge source="commands.AccelerateCarAction" target="model.GameWorld">
+      <point x="-153.0" y="-0.0" />
+      <point x="5600.0" y="2760.0" />
+      <point x="5600.0" y="1550.0" />
+      <point x="469.0" y="270.0" />
+    </edge>
+    <edge source="controller.Game" target="model.GameWorld">
+      <point x="212.0" y="-20.0" />
+      <point x="9520.0" y="3740.0" />
+      <point x="9520.0" y="1360.0" />
+      <point x="469.0" y="80.0" />
+    </edge>
+    <edge source="model.OilSlick" target="model.IColorable">
+      <point x="169.0" y="-0.0" />
+      <point x="11200.0" y="5080.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="utilities.RandNumGen" target="utilities.RandNumGen">
+      <point x="0.0" y="81.5" />
+      <point x="8840.0" y="2280.0" />
+      <point x="9160.0" y="2280.0" />
+      <point x="9160.0" y="2040.0" />
+      <point x="137.5" y="-0.0" />
+    </edge>
+    <edge source="controller.Game" target="commands.CollideWithPylonAction">
+      <point x="212.0" y="-60.0" />
+      <point x="9200.0" y="3700.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="model.FuelCan" target="utilities.Location2D">
+      <point x="-151.0" y="40.0" />
+      <point x="10560.0" y="4320.0" />
+      <point x="40.0" y="-81.5" />
+    </edge>
+    <edge source="model.GameWorld.Speed" target="model.GameWorld">
+      <point x="-75.0" y="-0.0" />
+      <point x="8320.0" y="2000.0" />
+      <point x="8320.0" y="1420.0" />
+      <point x="469.0" y="140.0" />
+    </edge>
+    <edge source="controller.Game" target="commands.BrakeCarAction">
+      <point x="-80.0" y="-169.5" />
+      <point x="6840.0" y="3040.0" />
+      <point x="140.0" y="-0.0" />
+    </edge>
+    <edge source="utilities.IObservable" target="utilities.IObserver">
+      <point x="0.0" y="25.5" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="commands.BrakeCarAction" target="commands.BrakeCarAction">
+      <point x="120.0" y="71.0" />
+      <point x="5520.0" y="3200.0" />
+      <point x="5680.0" y="3200.0" />
+      <point x="5680.0" y="3080.0" />
+      <point x="140.0" y="40.0" />
+    </edge>
+    <edge source="commands.AddOilSlickAction" target="model.GameWorld">
+      <point x="-147.0" y="-0.0" />
+      <point x="6040.0" y="2480.0" />
+      <point x="6040.0" y="1520.0" />
+      <point x="469.0" y="240.0" />
+    </edge>
+    <edge source="utilities.GameObjectCollection" target="utilities.GameObjectCollection.GameCollectionIterator">
+      <point x="-40.0" y="-71.0" />
+      <point x="2680.0" y="2240.0" />
+      <point x="79.0" y="-0.0" />
+    </edge>
+    <edge source="controller.LifeLostException" target="controller.AbstractGameException">
+      <point x="-85.0" y="-0.0" />
+      <point x="120.5" y="-0.0" />
+    </edge>
+    <edge source="model.Car" target="model.AbstractMoveableGameObject">
+      <point x="-80.0" y="346.0" />
+      <point x="11680.0" y="4160.0" />
+      <point x="129.5" y="-0.0" />
+    </edge>
+    <edge source="views.ScoreView" target="utilities.Observable">
+      <point x="91.0" y="-40.0" />
+      <point x="4880.0" y="3720.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="views.ScoreView" target="model.GameWorld">
+      <point x="-40.0" y="-70.5" />
+      <point x="4520.0" y="1600.0" />
+      <point x="469.0" y="320.0" />
+    </edge>
+    <edge source="controller.Game" target="commands.AccelerateCarAction">
+      <point x="-60.0" y="-169.5" />
+      <point x="6860.0" y="2760.0" />
+      <point x="153.0" y="-0.0" />
+    </edge>
+    <edge source="model.FuelCan" target="model.AbstractFixedGameObject">
+      <point x="0.0" y="70.5" />
+      <point x="10880.0" y="4920.0" />
+      <point x="2960.0" y="4920.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="utilities.GameObjectCollection" target="model.AbstractGameObject">
+      <point x="0.0" y="71.0" />
+      <point x="2720.0" y="4160.0" />
+      <point x="-119.5" y="-0.0" />
+    </edge>
+    <edge source="commands.AdvanceGameTimeAction" target="commands.AdvanceGameTimeAction">
+      <point x="168.5" y="-26.666666666666742" />
+      <point x="10080.0" y="3733.333333333333" />
+      <point x="10080.0" y="3560.0" />
+      <point x="9800.0" y="3560.0" />
+      <point x="40.0" y="-71.0" />
+    </edge>
+    <edge source="model.Bird" target="model.AbstractMoveableGameObject">
+      <point x="140.0" y="-0.0" />
+      <point x="4040.0" y="4360.0" />
+      <point x="-40.0" y="93.0" />
+    </edge>
+    <edge source="utilities.IObserver" target="utilities.Observable">
+      <point x="-112.0" y="20.0" />
+      <point x="4880.0" y="3340.0" />
+      <point x="0.0" y="-70.0" />
+    </edge>
+    <edge source="model.Car" target="model.ISteerable.Direction">
+      <point x="-365.0" y="40.0" />
+      <point x="280.0" y="360.0" />
+      <point x="0.0" y="-36.5" />
+    </edge>
+    <edge source="commands.CollideWithPylonAction" target="model.GameWorld">
+      <point x="0.0" y="-71.0" />
+      <point x="9200.0" y="1390.0" />
+      <point x="469.0" y="110.0" />
+    </edge>
+    <edge source="model.GameWorld" target="controller.GameOverException">
+      <point x="469.0" y="330.0" />
+      <point x="4400.0" y="1610.0" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="model.FuelCan" target="model.IColorable">
+      <point x="151.0" y="-0.0" />
+      <point x="-92.0" y="-0.0" />
+    </edge>
+    <edge source="commands.CollideWithFuelCanAction" target="commands.CollideWithFuelCanAction">
+      <point x="40.0" y="71.0" />
+      <point x="8120.0" y="2240.0" />
+      <point x="8400.0" y="2240.0" />
+      <point x="8400.0" y="2060.0" />
+      <point x="169.0" y="20.0" />
+    </edge>
+    <edge source="commands.CollideWithBirdAction" target="model.GameWorld">
+      <point x="-158.0" y="-0.0" />
+      <point x="6280.0" y="2200.0" />
+      <point x="6280.0" y="1500.0" />
+      <point x="469.0" y="220.0" />
+    </edge>
+    <edge source="views.ScoreView" target="utilities.IObserver">
+      <point x="0.0" y="-70.5" />
+      <point x="4560.0" y="3320.0" />
+      <point x="-112.0" y="-0.0" />
+    </edge>
+    <edge source="views.MapView" target="utilities.Observable">
+      <point x="-40.0" y="48.0" />
+      <point x="6200.0" y="3520.0" />
+      <point x="149.0" y="-0.0" />
+    </edge>
+    <edge source="utilities.GameObjectCollection" target="utilities.IIterable">
+      <point x="-189.0" y="-20.0" />
+      <point x="2120.0" y="2460.0" />
+      <point x="0.0" y="36.5" />
+    </edge>
+    <edge source="utilities.Location2D" target="utilities.Location2D">
+      <point x="80.0" y="81.5" />
+      <point x="10600.0" y="4760.0" />
+      <point x="10760.0" y="4760.0" />
+      <point x="10760.0" y="4640.0" />
+      <point x="112.0" y="40.0" />
+    </edge>
+    <edge source="commands.CollideWithCarAction" target="commands.CollideWithCarAction">
+      <point x="-120.0" y="-71.0" />
+      <point x="6800.0" y="1920.0" />
+      <point x="6600.0" y="1920.0" />
+      <point x="6600.0" y="2040.0" />
+      <point x="-156.5" y="-40.0" />
+    </edge>
+    <edge source="views.MapView" target="commands.AdvanceGameTimeAction">
+      <point x="0.0" y="48.0" />
+      <point x="6240.0" y="4000.0" />
+      <point x="9720.0" y="4000.0" />
+      <point x="-40.0" y="71.0" />
+    </edge>
+    <edge source="model.Car" target="utilities.Location2D">
+      <point x="0.0" y="346.0" />
+      <point x="11760.0" y="4600.0" />
+      <point x="112.0" y="-0.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.IColorable">
+      <point x="469.0" y="-0.0" />
+      <point x="11200.0" y="1280.0" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="controller.Game" target="commands.AddOilSlickAction">
+      <point x="-40.0" y="-169.5" />
+      <point x="6880.0" y="2480.0" />
+      <point x="147.0" y="-0.0" />
+    </edge>
+    <edge source="model.AbstractFixedGameObject" target="model.AbstractGameObject">
+      <point x="0.0" y="-48.0" />
+      <point x="2960.0" y="4200.0" />
+      <point x="-119.5" y="40.0" />
+    </edge>
+    <edge source="commands.AdvanceGameTimeAction" target="model.GameWorld">
+      <point x="-40.0" y="-71.0" />
+      <point x="9720.0" y="1350.0" />
+      <point x="469.0" y="70.0" />
+    </edge>
+    <edge source="commands.BrakeCarAction" target="model.GameWorld">
+      <point x="0.0" y="-71.0" />
+      <point x="5400.0" y="1560.0" />
+      <point x="469.0" y="280.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.GameWorld.Speed">
+      <point x="469.0" y="130.0" />
+      <point x="8560.0" y="1410.0" />
+      <point x="0.0" y="-70.5" />
+    </edge>
+    <edge source="commands.AddOilSlickAction" target="commands.AddOilSlickAction">
+      <point x="120.0" y="71.0" />
+      <point x="6360.0" y="2640.0" />
+      <point x="6560.0" y="2640.0" />
+      <point x="6560.0" y="2520.0" />
+      <point x="147.0" y="40.0" />
+    </edge>
+    <edge source="model.Car" target="model.IColorable">
+      <point x="-40.0" y="346.0" />
+      <point x="11720.0" y="4280.0" />
+      <point x="92.0" y="-0.0" />
+    </edge>
+    <edge source="utilities.Observable" target="utilities.IObserver">
+      <point x="149.0" y="-40.0" />
+      <point x="5240.0" y="3480.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="views.MapView" target="commands.AddOilSlickAction">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="commands.CollideWithCarAction" target="model.GameWorld">
+      <point x="156.5" y="-0.0" />
+      <point x="7120.0" y="2080.0" />
+      <point x="7120.0" y="1470.0" />
+      <point x="469.0" y="190.0" />
+    </edge>
+    <edge source="controller.Game" target="commands.CollideWithBirdAction">
+      <point x="-20.0" y="-169.5" />
+      <point x="6900.0" y="2200.0" />
+      <point x="158.0" y="-0.0" />
+    </edge>
+    <edge source="model.AbstractGameObject" target="utilities.Location2D">
+      <point x="119.5" y="20.0" />
+      <point x="3520.0" y="4180.0" />
+      <point x="3520.0" y="4580.0" />
+      <point x="-112.0" y="-20.0" />
+    </edge>
+    <edge source="utilities.GameObjectCollection.GameCollectionIterator" target="utilities.GameObjectCollection">
+      <point x="0.0" y="59.5" />
+      <point x="2360.0" y="2440.0" />
+      <point x="-189.0" y="-40.0" />
+    </edge>
+    <edge source="model.GameWorld" target="utilities.IIterable">
+      <point x="469.0" y="410.0" />
+      <point x="2120.0" y="1690.0" />
+      <point x="0.0" y="-36.5" />
+    </edge>
+    <edge source="commands.CollideWithFuelCanAction" target="model.GameWorld">
+      <point x="-169.0" y="-0.0" />
+      <point x="7840.0" y="2040.0" />
+      <point x="7840.0" y="1440.0" />
+      <point x="469.0" y="160.0" />
+    </edge>
+    <edge source="model.AbstractGameObject" target="model.IGameObject">
+      <point x="119.5" y="40.0" />
+      <point x="3360.0" y="4200.0" />
+      <point x="0.0" y="-59.0" />
+    </edge>
+    <edge source="commands.GenerateNewColorsAction" target="model.GameWorld">
+      <point x="0.0" y="-71.0" />
+      <point x="7560.0" y="1460.0" />
+      <point x="469.0" y="180.0" />
+    </edge>
+    <edge source="model.AbstractFixedGameObject" target="utilities.Location2D">
+      <point x="168.0" y="-0.0" />
+      <point x="10480.0" y="4800.0" />
+      <point x="-40.0" y="81.5" />
+    </edge>
+    <edge source="model.OilSlick" target="utilities.Location2D">
+      <point x="169.0" y="-40.0" />
+      <point x="10520.0" y="5040.0" />
+      <point x="0.0" y="81.5" />
+    </edge>
+    <edge source="utilities.ICollection" target="utilities.IIterable">
+      <point x="0.0" y="-37.0" />
+      <point x="1880.0" y="2240.0" />
+      <point x="-84.5" y="-0.0" />
+    </edge>
+    <edge source="model.Car" target="model.ISteerable">
+      <point x="-365.0" y="-0.0" />
+      <point x="80.0" y="320.0" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="model.ISteerable" target="model.ISteerable.Direction">
+      <point x="80.0" y="-0.0" />
+      <point x="-41.5" y="-0.0" />
+    </edge>
+    <edge source="views.MapView" target="commands.AccelerateCarAction">
+      <point x="-76.5" y="-40.0" />
+      <point x="5800.0" y="3280.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="model.OilSlick" target="model.AbstractFixedGameObject">
+      <point x="40.0" y="-81.5" />
+      <point x="1080.0" y="4840.0" />
+      <point x="-168.0" y="40.0" />
+    </edge>
+    <edge source="model.GameWorld" target="utilities.GameObjectCollection">
+      <point x="469.0" y="400.0" />
+      <point x="2720.0" y="1680.0" />
+      <point x="0.0" y="-71.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.FuelCan">
+      <point x="469.0" y="10.0" />
+      <point x="10880.0" y="1290.0" />
+      <point x="0.0" y="-70.5" />
+    </edge>
+    <edge source="commands.CollideWithPylonAction" target="commands.CollideWithPylonAction">
+      <point x="-80.0" y="-71.0" />
+      <point x="9120.0" y="2360.0" />
+      <point x="8840.0" y="2360.0" />
+      <point x="8840.0" y="2540.0" />
+      <point x="-162.5" y="-20.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.Pylon">
+      <point x="469.0" y="440.0" />
+      <point x="1720.0" y="1720.0" />
+      <point x="0.0" y="-70.5" />
+    </edge>
+    <edge source="model.AbstractMoveableGameObject" target="model.IMovable">
+      <point x="0.0" y="-93.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="utilities.GameObjectCollection.GameCollectionIterator" target="utilities.IIterable">
+      <point x="-79.0" y="-0.0" />
+      <point x="84.5" y="-0.0" />
+    </edge>
+    <edge source="commands.AccelerateCarAction" target="commands.AccelerateCarAction">
+      <point x="40.0" y="71.0" />
+      <point x="5840.0" y="3000.0" />
+      <point x="6200.0" y="3000.0" />
+      <point x="6200.0" y="2773.3333333333335" />
+      <point x="153.0" y="13.333333333333485" />
+    </edge>
+    <edge source="views.MapView" target="utilities.IObserver">
+      <point x="-76.5" y="-0.0" />
+      <point x="112.0" y="-0.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.Car">
+      <point x="469.0" y="-40.0" />
+      <point x="11640.0" y="1240.0" />
+      <point x="-120.0" y="346.0" />
+    </edge>
+    <edge source="controller.Game" target="commands.GenerateNewColorsAction">
+      <point x="212.0" y="-120.0" />
+      <point x="7560.0" y="3640.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="controller.GameOverException" target="controller.AbstractGameException">
+      <point x="101.0" y="-0.0" />
+      <point x="-120.5" y="-0.0" />
+    </edge>
+    <edge source="model.Pylon" target="model.AbstractFixedGameObject">
+      <point x="0.0" y="70.5" />
+      <point x="1720.0" y="4800.0" />
+      <point x="-168.0" y="-0.0" />
+    </edge>
+    <edge source="model.AbstractMoveableGameObject" target="model.AbstractGameObject">
+      <point x="-129.5" y="-0.0" />
+      <point x="119.5" y="-0.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.GameWorld.Size">
+      <point x="-469.0" y="40.0" />
+      <point x="400.0" y="1320.0" />
+      <point x="0.0" y="-70.5" />
+    </edge>
+    <edge source="model.ISteerable.Direction" target="model.ISteerable">
+      <point x="0.0" y="36.5" />
+      <point x="280.0" y="1360.0" />
+      <point x="80.0" y="1360.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="controller.Game" target="commands.CollideWithFuelCanAction">
+      <point x="212.0" y="-80.0" />
+      <point x="8040.0" y="3680.0" />
+      <point x="-40.0" y="71.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.Bird">
+      <point x="469.0" y="350.0" />
+      <point x="3720.0" y="1630.0" />
+      <point x="0.0" y="-48.5" />
+    </edge>
+    <edge source="model.GameWorld" target="controller.LifeLostException">
+      <point x="469.0" y="50.0" />
+      <point x="10200.0" y="1330.0" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="model.GameWorld" target="utilities.Observable">
+      <point x="469.0" y="310.0" />
+      <point x="4680.0" y="1590.0" />
+      <point x="4680.0" y="3520.0" />
+      <point x="-149.0" y="-0.0" />
+    </edge>
+    <edge source="controller.Game" target="commands.AdvanceGameTimeAction">
+      <point x="212.0" y="-0.0" />
+      <point x="-168.5" y="-0.0" />
+    </edge>
+    <edge source="model.Bird" target="utilities.Location2D">
+      <point x="0.0" y="48.5" />
+      <point x="3720.0" y="4573.333333333333" />
+      <point x="-112.0" y="-26.66666666666663" />
+    </edge>
+    <edge source="controller.Game" target="views.ScoreView">
+      <point x="0.0" y="169.5" />
+      <point x="6920.0" y="4040.0" />
+      <point x="4560.0" y="4040.0" />
+      <point x="0.0" y="70.5" />
+    </edge>
+    <edge source="model.GameWorld" target="model.ISteerable.Direction">
+      <point x="-469.0" y="-0.0" />
+      <point x="41.5" y="-0.0" />
+    </edge>
+    <edge source="controller.Game" target="views.MapView">
+      <point x="-160.0" y="-169.5" />
+      <point x="6760.0" y="3320.0" />
+      <point x="76.5" y="-0.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.AbstractGameObject">
+      <point x="469.0" y="360.0" />
+      <point x="3280.0" y="1640.0" />
+      <point x="3280.0" y="4120.0" />
+      <point x="119.5" y="-40.0" />
+    </edge>
+    <edge source="model.GameWorld" target="model.OilSlick">
+      <point x="0.0" y="466.5" />
+      <point x="0.0" y="-81.5" />
+    </edge>
+    <edge source="model.AbstractMoveableGameObject" target="utilities.Location2D">
+      <point x="0.0" y="93.0" />
+      <point x="4080.0" y="4566.666666666667" />
+      <point x="-112.0" y="-33.33333333333337" />
+    </edge>
+    <edge source="commands.GenerateNewColorsAction" target="commands.GenerateNewColorsAction">
+      <point x="-120.0" y="-71.0" />
+      <point x="7440.0" y="1880.0" />
+      <point x="7240.0" y="1880.0" />
+      <point x="7240.0" y="2000.0" />
+      <point x="-169.0" y="-40.0" />
+    </edge>
+    <edge source="model.IGameObject" target="utilities.Location2D">
+      <point x="0.0" y="59.0" />
+      <point x="3360.0" y="4586.666666666667" />
+      <point x="-112.0" y="-13.333333333333371" />
+    </edge>
+    <edge source="controller.Game" target="commands.CollideWithCarAction">
+      <point x="0.0" y="-169.5" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="model.GameWorld" target="utilities.RandNumGen">
+      <point x="469.0" y="120.0" />
+      <point x="8840.0" y="1400.0" />
+      <point x="0.0" y="-81.5" />
+    </edge>
+    <edge source="utilities.GameObjectCollection" target="utilities.ICollection">
+      <point x="-189.0" y="-0.0" />
+      <point x="81.0" y="-0.0" />
+    </edge>
+    <edge source="model.GameWorld.Size" target="model.GameWorld">
+      <point x="77.5" y="-0.0" />
+      <point x="1000.0" y="1920.0" />
+      <point x="-40.0" y="466.5" />
+    </edge>
+    <edge source="commands.CollideWithBirdAction" target="commands.CollideWithBirdAction">
+      <point x="80.0" y="71.0" />
+      <point x="6560.0" y="2360.0" />
+      <point x="6760.0" y="2360.0" />
+      <point x="6760.0" y="2240.0" />
+      <point x="158.0" y="40.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.1" x="2371.5330700314635" y="4642.2741604263865" />
+  <SelectedNodes>
+    <node>model.GameWorld.Size</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Constructors</Category>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
